@@ -9,6 +9,7 @@ import (
 	"recorderData/entity/stocks"
 	"recorderData/internal/repository"
 	"recorderData/internal/service"
+	"recorderData/pkg/web"
 )
 
 func main() {
@@ -83,4 +84,5 @@ func main() {
 	}
 	fmt.Println(stockSaved)
 
+	web.Start()
 }
