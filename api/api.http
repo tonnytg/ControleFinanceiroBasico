@@ -1,0 +1,15 @@
+GET http://localhost:8080/stocks
+Content-Type: application/json
+
+{
+  "id": "d0558635-7438-4ed8-b782-b36face36e30"
+}
+###
+
+POST http://localhost:8080/stocks
+Content-Type: application/json
+
+{
+    "name": "Apple2",
+    "price": 100
+}

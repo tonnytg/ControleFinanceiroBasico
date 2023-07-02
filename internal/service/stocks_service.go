@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"recorderData/entity/stocks"
 )
 
@@ -13,7 +12,7 @@ func NewStockssService(repository stocks.StockRepository) *StocksService {
 	return &StocksService{Repository: repository}
 }
 
-func (s *StocksService) findById(id string) (stocks.Stock, error) {
+func (s *StocksService) FindById(id string) (stocks.Stock, error) {
 	stockInstance, err := s.Repository.GetStock(id)
 	if err != nil {
 		return stocks.Stock{}, err
@@ -27,7 +26,6 @@ func (s *StocksService) Create(stock stocks.Stock) (stocks.Stock, error) {
 	if err != nil {
 		return stocks.Stock{}, err
 	}
-	fmt.Println("Instance: ", stockInstance)
 	stockSaved, err := s.Repository.SaveStock(stockInstance)
 	if err != nil {
 		return stocks.Stock{}, err

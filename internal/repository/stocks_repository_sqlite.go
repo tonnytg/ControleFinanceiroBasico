@@ -3,7 +3,6 @@ package repository
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"recorderData/entity/stocks"
@@ -26,7 +25,7 @@ func (s *StocksRepositorySqlite) GetStock(id string) (stocks.Stock, error) {
 	}
 	defer stmt.Close()
 
-	err = stmt.QueryRow(id).Scan(&stockInstance.Id, &stockInstance.Name)
+	err = stmt.QueryRow(id).Scan(&stockInstance.Id, &stockInstance.Name, &stockInstance.Description, &stockInstance.Amount, &stockInstance.Quantity, &stockInstance.Tax, &stockInstance.DateMade, &stockInstance.Action)
 	if err != nil {
 		return stockInstance, errors.New("stock not found with this Id")
 	}
@@ -35,13 +34,11 @@ func (s *StocksRepositorySqlite) GetStock(id string) (stocks.Stock, error) {
 
 func (s *StocksRepositorySqlite) SaveStock(stock stocks.Stock) (stocks.Stock, error) {
 	log.Default().Println("Saving stock in sqlite repository")
-	fmt.Println("bill: ", stock)
 	stmt, err := s.db.Prepare("insert into stocks (id, name, description, amount, quantity, tax, datemade, action) values (?, ?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		return stock, err
 	}
 
-	fmt.Println("Stock received: ", stock)
 	_, err = stmt.Exec(stock.Id, stock.Name, stock.Description, stock.Amount, stock.Quantity, stock.Tax, stock.DateMade, stock.Action)
 	if err != nil {
 		return stock, err
