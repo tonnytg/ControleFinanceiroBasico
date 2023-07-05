@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"recorderData/entity/bills"
-	"recorderData/entity/stocks"
 	"recorderData/internal/dto"
 	"recorderData/internal/usecases"
 )
@@ -20,13 +19,13 @@ func BillGetHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("create use case: " + err.Error())
 	}
 
-	stockDTO, err := dto.NewStock(billGot)
+	billDTO, err := dto.NewBill(billGot)
 	if err != nil {
-		log.Fatal("create stock dto case: " + err.Error())
+		log.Fatal("create bill dto case: " + err.Error())
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	responseJSON, err := json.MarshalIndent(stockDTO, "", "  ")
+	responseJSON, err := json.MarshalIndent(billDTO, "", "  ")
 	if err != nil {
 		log.Fatal("marshal stock dto: " + err.Error())
 	}
@@ -34,13 +33,13 @@ func BillGetHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(responseJSON)
 }
 
-func StockPostHandler(w http.ResponseWriter, r *http.Request) {
-	var stockDraft stocks.Stock
-	json.NewDecoder(r.Body).Decode(&stockDraft)
+func BillPostHandler(w http.ResponseWriter, r *http.Request) {
+	var billDraft bills.Bill
+	json.NewDecoder(r.Body).Decode(&billDraft)
 
-	stockSaved, err := usecases.CreateStock(stockDraft)
+	billSaved, err := usecases.CreateBill(billDraft)
 	if err != nil {
 		log.Fatal("create use case: " + err.Error())
 	}
-	fmt.Fprintf(w, "Stock saved: %v", stockSaved)
+	fmt.Fprintf(w, "Stock saved: %v", billSaved)
 }

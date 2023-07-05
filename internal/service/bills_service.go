@@ -13,7 +13,7 @@ func NewBillsService(repository bills.BillRepository) *BillsService {
 	return &BillsService{Repository: repository}
 }
 
-func (b *BillsService) findById(id string) (bills.Bill, error) {
+func (b *BillsService) FindById(id string) (bills.Bill, error) {
 	billInstance, err := b.Repository.GetBill(id)
 	if err != nil {
 		return bills.Bill{}, err
