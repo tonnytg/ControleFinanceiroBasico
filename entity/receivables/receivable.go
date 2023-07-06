@@ -19,15 +19,15 @@ type Receivable struct {
 	Description string
 }
 
-func NewReceivable(Name string, Type string, Amount float64, Date string, Status string, Description string) *Receivable {
+func NewReceivable(receivable Receivable) (Receivable, error) {
 	r := Receivable{
 		Id:          uuid.NewString(),
-		Name:        Name,
-		Type:        Type,
-		Amount:      Amount,
-		Date:        Date,
-		Status:      Status,
-		Description: Description,
+		Name:        receivable.Name,
+		Type:        receivable.Type,
+		Amount:      receivable.Amount,
+		Date:        receivable.Date,
+		Status:      receivable.Status,
+		Description: receivable.Description,
 	}
-	return &r
+	return r, nil
 }

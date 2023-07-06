@@ -13,7 +13,7 @@ func GetStock(stockDraft stocks.Stock) (stocks.Stock, error) {
 	dbStock, _ := sql.Open("sqlite3", "./sqlite.repository")
 	repositorySqliteStock := repository.NewRepositoryStocksSqlite(dbStock)
 
-	stockService := service.NewStockssService(repositorySqliteStock)
+	stockService := service.NewStocksService(repositorySqliteStock)
 	stockGot, err := stockService.FindById(stockDraft.Id)
 	if err != nil {
 		return stocks.Stock{}, nil

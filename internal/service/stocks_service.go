@@ -8,7 +8,7 @@ type StocksService struct {
 	Repository stocks.StockRepository
 }
 
-func NewStockssService(repository stocks.StockRepository) *StocksService {
+func NewStocksService(repository stocks.StockRepository) *StocksService {
 	return &StocksService{Repository: repository}
 }
 

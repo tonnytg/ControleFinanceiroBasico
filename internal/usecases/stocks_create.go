@@ -17,7 +17,7 @@ func CreateStock(stockDraft stocks.Stock) (stocks.Stock, error) {
 		return stocks.Stock{}, nil
 	}
 
-	stockService := service.NewStockssService(repositorySqliteStock)
+	stockService := service.NewStocksService(repositorySqliteStock)
 	stockSaved, err := stockService.Create(stock)
 	if err != nil {
 		return stocks.Stock{}, nil

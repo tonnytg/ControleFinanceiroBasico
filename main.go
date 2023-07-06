@@ -13,23 +13,37 @@ import (
 )
 
 func main() {
+	//DemoUploadData()
+	web.Start()
+}
+
+func DemoUploadData() {
 	dbReceivable := repository.ReceivableMemoryDb{Receivable: []receivables.Receivable{}}
 	repositoryMemory := repository.NewRepositoryReceivableMemory(dbReceivable)
 
-	receivableService := service.NewReceivableService(repositoryMemory)
-	r, _ := receivableService.Create("teste", "teste", 10.0, "teste", "teste", "teste")
-	fmt.Println(r)
+	var receivableDraft = receivables.Receivable{
+		Name:        "teste1",
+		Type:        "teste1",
+		Amount:      11.0,
+		Date:        "teste1",
+		Status:      "teste1",
+		Description: "teste1",
+	}
 
+	receivableService := service.NewReceivableService(repositoryMemory)
+	r, _ := receivableService.Create(receivableDraft)
+	fmt.Println(r)
+	// ---
 	dbReceivable2, _ := sql.Open("sqlite3", "./sqlite.repository")
-	repositorySqlite := repository.NewRepositorySqlite(dbReceivable2)
+	repositorySqlite := repository.NewRepositoryReceivablesSqlite(dbReceivable2)
 
 	receivableService2 := service.NewReceivableService(repositorySqlite)
-	rr, err := receivableService2.Create("teste1", "teste1", 11.0, "teste1", "teste1", "teste1")
+	rr, err := receivableService2.Create(receivableDraft)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(rr)
-
+	// ---
 	dbBill1 := repository.BillsMemoryDb{Bills: []bills.Bill{}}
 	repositoryMemoryBill := repository.NewRepositoryBillsMemory(dbBill1)
 
@@ -47,7 +61,7 @@ func main() {
 	myBill, _ := bills.NewBill(myBillDraft)
 	b, _ := billService.Create(myBill)
 	fmt.Println(b)
-
+	// ---
 	dbBill2, _ := sql.Open("sqlite3", "./sqlite.repository")
 	repositorySqliteBill := repository.NewRepositoryBillsSqlite(dbBill2)
 
@@ -77,12 +91,10 @@ func main() {
 
 	stock, _ := stocks.NewStock(stockDraft)
 
-	stockService := service.NewStockssService(repositorySqliteStock)
+	stockService := service.NewStocksService(repositorySqliteStock)
 	stockSaved, err := stockService.Create(stock)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(stockSaved)
-
-	web.Start()
 }

@@ -13,14 +13,14 @@ type ReceivableRepositorySqlite struct {
 	db *sql.DB
 }
 
-func NewRepositorySqlite(db *sql.DB) *ReceivableRepositorySqlite {
+func NewRepositoryReceivablesSqlite(db *sql.DB) *ReceivableRepositorySqlite {
 	return &ReceivableRepositorySqlite{db: db}
 }
 
 func (r *ReceivableRepositorySqlite) GetReceivable(id string) (receivables.Receivable, error) {
 
 	var receivableInstance receivables.Receivable
-	stmt, err := r.db.Prepare("select * from receivable where receivable_id = ?")
+	stmt, err := r.db.Prepare("select * from receivable where id = ?")
 	if err != nil {
 		return receivableInstance, err
 	}
