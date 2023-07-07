@@ -15,6 +15,8 @@ func GetReceivable(receivableDraft receivables.Receivable) (receivables.Receivab
 
 	receivableService := service.NewReceivableService(repositorySqliteReceivable)
 	receivableGot, err := receivableService.FindById(receivableDraft.Id)
+	log.Default().Println("Receivable got3: ", receivableGot)
+	log.Default().Println("err ot3: ", err)
 	if err != nil {
 		return receivables.Receivable{}, nil
 	}

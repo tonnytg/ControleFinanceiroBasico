@@ -2,7 +2,6 @@ package repository
 
 import (
 	"database/sql"
-	"errors"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
@@ -18,18 +17,24 @@ func NewRepositoryReceivablesSqlite(db *sql.DB) *ReceivableRepositorySqlite {
 }
 
 func (r *ReceivableRepositorySqlite) GetReceivable(id string) (receivables.Receivable, error) {
-
 	var receivableInstance receivables.Receivable
-	stmt, err := r.db.Prepare("select * from receivable where id = ?")
+
+	stmt, err := r.db.Prepare("SELECT id, name FROM receivable WHERE id = ?")
 	if err != nil {
 		return receivableInstance, err
 	}
 	defer stmt.Close()
 
-	err = stmt.QueryRow(id).Scan(&receivableInstance.Id, &receivableInstance.Name)
+	err = stmt.QueryRow(id).Scan(
+		&receivableInstance.Id,
+		&receivableInstance.Name,
+	)
 	if err != nil {
-		return receivableInstance, errors.New("receivable not found with this Id")
+		log.Default().Println("Receivable got: ", receivableInstance)
+		return receivableInstance, err
 	}
+
+	log.Default().Println("Receivable got: ", receivableInstance)
 	return receivableInstance, nil
 }
 
