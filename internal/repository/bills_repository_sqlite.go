@@ -26,7 +26,17 @@ func (b *BillsRepositorySqlite) GetBill(id string) (bills.Bill, error) {
 	}
 	defer stmt.Close()
 
-	err = stmt.QueryRow(id).Scan(&billInstance.Id, &billInstance.Title)
+	err = stmt.QueryRow(id).Scan(
+		&billInstance.Id,
+		&billInstance.Title,
+		&billInstance.Receiver,
+		&billInstance.Description,
+		&billInstance.Value,
+		&billInstance.Tax,
+		&billInstance.DateIssued,
+		&billInstance.DateExpiration,
+		&billInstance.Observation,
+	)
 	if err != nil {
 		return billInstance, errors.New("bill not found with this Id")
 	}

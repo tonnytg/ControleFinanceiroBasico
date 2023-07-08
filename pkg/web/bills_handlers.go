@@ -11,10 +11,11 @@ import (
 )
 
 func BillGetHandler(w http.ResponseWriter, r *http.Request) {
-	var bill bills.Bill
-	json.NewDecoder(r.Body).Decode(&bill)
 
-	billGot, err := usecases.GetBill(bill)
+	var billDraft bills.Bill
+
+	json.NewDecoder(r.Body).Decode(&billDraft)
+	billGot, err := usecases.GetBill(billDraft)
 	if err != nil {
 		log.Fatal("create use case: " + err.Error())
 	}

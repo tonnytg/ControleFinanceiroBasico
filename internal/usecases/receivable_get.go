@@ -2,7 +2,6 @@ package usecases
 
 import (
 	"database/sql"
-	"log"
 	"recorderData/entity/receivables"
 	"recorderData/internal/repository"
 	"recorderData/internal/service"
@@ -15,11 +14,9 @@ func GetReceivable(receivableDraft receivables.Receivable) (receivables.Receivab
 
 	receivableService := service.NewReceivableService(repositorySqliteReceivable)
 	receivableGot, err := receivableService.FindById(receivableDraft.Id)
-	log.Default().Println("Receivable got3: ", receivableGot)
-	log.Default().Println("err ot3: ", err)
 	if err != nil {
 		return receivables.Receivable{}, nil
 	}
-	log.Default().Println("Receivable got: ", receivableGot)
+
 	return receivableGot, nil
 }

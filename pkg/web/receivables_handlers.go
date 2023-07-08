@@ -11,7 +11,9 @@ import (
 )
 
 func ReceivableGetHandler(w http.ResponseWriter, r *http.Request) {
+
 	var receivableDraft receivables.Receivable
+
 	json.NewDecoder(r.Body).Decode(&receivableDraft)
 
 	receivableGot, err := usecases.GetReceivable(receivableDraft)
@@ -34,12 +36,14 @@ func ReceivableGetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ReceivablePostHandler(w http.ResponseWriter, r *http.Request) {
-	var receivableDraft receivables.Receivable
-	json.NewDecoder(r.Body).Decode(&receivableDraft)
 
+	var receivableDraft receivables.Receivable
+
+	json.NewDecoder(r.Body).Decode(&receivableDraft)
 	receivableSaved, err := usecases.CreateReceivable(receivableDraft)
 	if err != nil {
 		log.Fatal("create use case: " + err.Error())
 	}
+
 	fmt.Fprintf(w, "receivable saved: %v", receivableSaved)
 }
